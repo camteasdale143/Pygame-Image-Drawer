@@ -1,0 +1,66 @@
+import pygame
+import csv
+
+surface = pygame.display.set_mode((500,842))
+pygame.display.flip()
+mouse = pygame.mouse
+
+running = True
+colors = []
+backgroundColor = (0,0,0)
+savedmouse = 0;
+
+mouse_start = (0,0);
+mouse_end = (0,0);
+
+draw_state = "rect";
+
+with open('color.csv') as csv_file:
+    csv_reader = csv.reader(csv_file, delimiter=',')
+    line_count = 0
+    for row in csv_reader:
+       colors.append(row)
+
+def click():
+    mouse_start = mouse.get_pos()
+    print(mouse_start)
+    
+def unclick(): 
+    mouse_end = mouse.get_pos()
+    if draw_state == "rect":
+        print(mouse_start)
+        pygame.draw.rect(surface, (255,255,255), pygame.Rect(mouse_start[0], mouse_start[1], mouse_end[0], mouse_end[1]))
+
+def background():
+    surface.fill(backgroundColor, pygame.Rect(0,0,500,500))
+    surface.fill((255,255,255), pygame.Rect(0, 500, 500, 842))
+    
+    
+def pallet():
+    for y in range(0, 341):
+        for x in range(0,341):
+            print(colors[x][0])
+            pygame.draw.rect(surface, pygame.Color(colors[x][0]), pygame.Rect(x, y, 1,1))
+    
+background()
+# pallet()
+
+while running:
+    for event in pygame.event.get():
+
+        if mouse.get_pressed()[0] == 1 and savedmouse == 0:
+            print('click')
+            savedmouse = 1
+            click()
+        elif mouse.get_pressed()[0] == 0 and savedmouse == 1:
+            savedmouse = 0
+            unclick()
+            
+        pygame.display.update()
+        if event.type == pygame.QUIT:
+            running = False
+
+print(colors) 
+surface = pygame.display.set_mode((500,500))
+
+pygame.image.save(surface, "test.bmp")
