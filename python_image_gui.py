@@ -5,7 +5,7 @@ import csv
 surface = pygame.display.set_mode((500,842))
 pygame.display.flip()
 mouse = pygame.mouse
-log_file = open("assignment_long.py", "w");
+log_file = open("assignment_script.py", "w");
 
 running = True
 colors = []
