@@ -26,5 +26,4 @@ Typing the following letters on the keyboard will allow you to access different 
 press `u` to undo the last shape drawn. Rectangles drawn during the polygon creating process are undone in this process.
 
 ### Colors
-
-	in order to change the color used in the program the arrow keys should be used. The color pallet seen in the bottom left of the screen show all colors allowed for the project. These colors will be automatically appended as comments to the next file as the assignment specifies
+in order to change the color used in the program the arrow keys should be used. The color pallet seen in the bottom left of the screen show all colors allowed for the project. These colors will be automatically appended as comments to the next file as the assignment specifies
