@@ -1,30 +1,30 @@
 import pygame
 
 surface = pygame.display.set_mode((500,500))
-surface.fill((125, 5, 65, 255))
+surface.fill((127, 90, 88, 255))
 #Rectangle drawn with color: White
-pygame.draw.rect(surface, (255, 255, 255), pygame.Rect(145, 120, 151, 141))
+pygame.draw.rect(surface, (255, 255, 255), pygame.Rect(62, 211, 0, 0))
 
-#Ellipse drawn with color: White
-pygame.draw.ellipse(surface, (255, 255, 255), pygame.Rect(193, 181, 168, 91))
+#Rectangle drawn with color: White
+pygame.draw.rect(surface, (255, 255, 255), pygame.Rect(254, 81, 60, -5))
 
-#Ellipse drawn with color:  Brown Sugar
-pygame.draw.ellipse(surface, (226, 167, 111, 255), pygame.Rect(256, 227, 185, 123))
+#Rectangle drawn with color: White
+pygame.draw.rect(surface, (255, 255, 255), pygame.Rect(437, 77, 0, 0))
 
-#Rectangle drawn with color:  Orange Salmon
-pygame.draw.rect(surface, (196, 116, 81, 255), pygame.Rect(259, 470, 1, 1))
+#Rectangle drawn with color: White
+pygame.draw.rect(surface, (255, 255, 255), pygame.Rect(440, 207, 0, 0))
 
-#Rectangle drawn with color:  Orange Salmon
-pygame.draw.rect(surface, (196, 116, 81, 255), pygame.Rect(70, 227, 1, 1))
+#Rectangle drawn with color: White
+pygame.draw.rect(surface, (255, 255, 255), pygame.Rect(233, 110, 230, 155))
 
-#Rectangle drawn with color:  Orange Salmon
-pygame.draw.rect(surface, (196, 116, 81, 255), pygame.Rect(199, 134, 1, 1))
+#Rectangle drawn with color:  Lemon Chiffon
+pygame.draw.rect(surface, (255, 248, 198, 255), pygame.Rect(136, 122, 148, 78))
 
-#Rectangle drawn with color:  Orange Salmon
-pygame.draw.rect(surface, (196, 116, 81, 255), pygame.Rect(291, 285, 1, 1))
+#Ellipse drawn with color:  Lemon Chiffon
+pygame.draw.ellipse(surface, (255, 248, 198, 255), pygame.Rect(136, 97, 186, 54))
 
-#Rectangle drawn with color:  Orange Salmon
-pygame.draw.polygon(surface, (196, 116, 81, 255), [(259, 470), (70, 227), (199, 134), (291, 285)])
+#Circle drawn with color:  Coffee
+pygame.draw.circle(surface, (111, 78, 55, 255), (49, 240), 31)
 
 
 pygame.display.update()
