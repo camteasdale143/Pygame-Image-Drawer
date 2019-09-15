@@ -2,10 +2,10 @@ import pygame
 import math
 import csv
 
-surface = pygame.display.set_mode((500,842))
+surface = pygame.display.set_mode((600,842))
 pygame.display.flip()
 mouse = pygame.mouse
-log_file = open("assignment_long.py", "w");
+log_file = open("assignment_script.py", "w");
 
 running = True
 colors = []
@@ -16,6 +16,7 @@ fill_color = (255,255,255);
 color_name = "White";
 
 mouse_data = [(0,0),(0,0)];
+global ploy_points;
 poly_points = [];
 
 rects = []
@@ -54,14 +55,17 @@ def drawFill():
 def drawPoly():
     global poly_points
     if (poly_points == []):
-        rects.append(((surface, fill_color, pygame.Rect(mouse_data[1][0],mouse_data[1][1], 1,1)), color_name))
+        rects.append(((surface, (255,0,0), pygame.Rect(mouse_data[1][0],mouse_data[1][1], 1,1)), color_name))
         order.append(("rect", len(rects) - 1))
         poly_points.append(mouse_data[1])
     elif (abs(dist((poly_points[0][0] - mouse_data[1][0],poly_points[0][1] - mouse_data[1][1]))) > 20 or len(poly_points) < 3):
-        rects.append(((surface, fill_color, pygame.Rect(mouse_data[1][0],mouse_data[1][1], 1,1)), color_name))
+        rects.append(((surface, (255,0,0), pygame.Rect(mouse_data[1][0],mouse_data[1][1], 1,1)), color_name))
         order.append(("rect", len(rects) - 1))
         poly_points.append(mouse_data[1])
     else:
+        for num in range(len(poly_points)):
+            rects.pop()
+            order.pop()
         polys.append(((surface, fill_color, poly_points), color_name))
         poly_points = []
         order.append(("poly", len(polys) - 1))
@@ -101,11 +105,12 @@ def updateColor(index, direction):
     print(color_name)
 
 def keyboard():
+    global poly_points
     if event.type == pygame.KEYDOWN:
         global draw_state
         if event.key == pygame.K_u and len(order) > 0:
             s = order[len(order) - 1] 
-            if (s[0] == "rect" and len(rects) > 0):
+            if (s[0] == "rect" and len(rects) > 0 and draw_state != "poly"):
                 rects.pop()
                 order.pop()
             elif (s[0] == "circ"and len(circs) > 0):
@@ -118,7 +123,6 @@ def keyboard():
                 polys.pop()
                 order.pop()
 
-            
         if event.key == pygame.K_r:
             draw_state = "rect"
             print("rect mode");
@@ -132,6 +136,7 @@ def keyboard():
             draw_state = "fill"
             print("fill mode")
         if event.key == pygame.K_p:
+            poly_points = []
             draw_state = "poly"
             print("poly mode")
         if event.key == pygame.K_UP:
@@ -144,18 +149,18 @@ def keyboard():
             updateColor(1,1)
             
 def background():
-    surface.fill(backgroundColor, pygame.Rect(0,0,500,500))
-    surface.fill(fill_color, pygame.Rect(0, 500, 500, 842))
+    surface.fill((255,255,255))
+    surface.fill(backgroundColor, pygame.Rect(50,0,500,500))
+    surface.fill(fill_color, pygame.Rect(0, 500, 600, 400))
     
 def pallet():
     for y in range(0, 34):
         for x in range(0,10):
-            pygame.draw.rect(surface, pygame.Color(colors[x + y*10][0]), pygame.Rect(x*10, 500 + y*10, 10,10))
-    pygame.draw.rect(surface, (0,0,0), pygame.Rect(color_pos[0]*10, color_pos[1]*10 + 500, 10, 10))
+            pygame.draw.rect(surface, pygame.Color(colors[x + y*10][0]), pygame.Rect(50 + x*10, 500 + y*10, 10,10))
+    pygame.draw.rect(surface, (0,0,0), pygame.Rect(50 + color_pos[0]*10, color_pos[1]*10 + 500, 10, 10))
 
 def draw(): 
     background()
-    pallet()
     for s in order:
         if s[0] == "rect":
             pygame.draw.rect(*rects[s[1]][0])
@@ -165,15 +170,11 @@ def draw():
             pygame.draw.ellipse(*ellis[s[1]][0])
         if s[0] == "poly":
             pygame.draw.polygon(*polys[s[1]][0])
-        
-            
+    pallet()
     
-background()
-pallet()
 
 while running:
     for event in pygame.event.get():
-
         if mouse.get_pressed()[0] == 1 and savedmouse == 0:
             savedmouse = 1
             click()
@@ -184,8 +185,8 @@ while running:
         draw()
         if event.type == pygame.QUIT:
             running = False
-    
-    pygame.display.update()
+
+        pygame.display.update()
 
 
 def write_drawing(): 
@@ -196,19 +197,22 @@ def write_drawing():
         if s[0] == "rect":
             rectangle = rects[s[1]]
             drawString += "#Rectangle drawn with color: {0}\n".format(rectangle[1])
-            drawString += "pygame.draw.rect(surface, {0}, pygame.Rect({1}, {2}, {3}, {4}))\n\n".format(rectangle[0][1], rectangle[0][2][0],rectangle[0][2][1], rectangle[0][2][2], rectangle[0][2][3])
+            drawString += "pygame.draw.rect(surface, {0}, pygame.Rect({1} - 50, {2}, {3}, {4}))\n\n".format(rectangle[0][1], rectangle[0][2][0],rectangle[0][2][1], rectangle[0][2][2], rectangle[0][2][3])
         if s[0] == "circ":
             circle = circs[s[1]]
             drawString += "#Circle drawn with color: {0}\n".format(circle[1])
-            drawString += "pygame.draw.circle(surface, {0}, {1}, {2})\n\n".format(circle[0][1], circle[0][2], circle[0][3])
+            drawString += "pygame.draw.circle(surface, {0}, {1}, {2})\n\n".format(circle[0][1], (circle[0][2][0] - 50, circle[0][2][1]), circle[0][3])
         if s[0] == "elli":
             ellipse = ellis[s[1]]
             drawString += "#Ellipse drawn with color: {0}\n".format(ellipse[1])
-            drawString +=  "pygame.draw.ellipse(surface, {0}, pygame.Rect({1}, {2}, {3}, {4}))\n\n".format(ellipse[0][1], ellipse[0][2][0],ellipse[0][2][1], ellipse[0][2][2], ellipse[0][2][3])
+            drawString +=  "pygame.draw.ellipse(surface, {0}, pygame.Rect({1} - 50, {2}, {3}, {4}))\n\n".format(ellipse[0][1], ellipse[0][2][0],ellipse[0][2][1], ellipse[0][2][2], ellipse[0][2][3])
         if s[0] == "poly":
             polygon = polys[s[1]]
             drawString += "#Rectangle drawn with color: {0}\n".format(polygon[1])
-            drawString += "pygame.draw.polygon(surface, {0}, {1})\n\n".format(polygon[0][1], polygon[0][2])
+            mapped_points = []
+            for point in range(len(polygon[0][2])):
+                mapped_points.append((polygon[0][2][point][0] - 50,polygon[0][2][point][1]))
+            drawString += "pygame.draw.polygon(surface, {0}, {1})\n\n".format(polygon[0][1], mapped_points)
     log_file.write(drawString)
     print("saved image")
 
