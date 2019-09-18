@@ -196,19 +196,19 @@ def write_drawing():
     for s in order:
         if s[0] == "rect":
             rectangle = rects[s[1]]
-            drawString += "#Rectangle drawn with color: {0}\n".format(rectangle[1])
+            drawString += "#Rectangle drawn with color: {0} - {1}\n".format(rectangle[1], rectangle[0][1])
             drawString += "pygame.draw.rect(surface, {0}, pygame.Rect({1} - 50, {2}, {3}, {4}))\n\n".format(rectangle[0][1], rectangle[0][2][0],rectangle[0][2][1], rectangle[0][2][2], rectangle[0][2][3])
         if s[0] == "circ":
             circle = circs[s[1]]
-            drawString += "#Circle drawn with color: {0}\n".format(circle[1])
+            drawString += "#Circle drawn with color: {0} - {1}\n".format(circle[1], circle[0][1])
             drawString += "pygame.draw.circle(surface, {0}, {1}, {2})\n\n".format(circle[0][1], (circle[0][2][0] - 50, circle[0][2][1]), circle[0][3])
         if s[0] == "elli":
             ellipse = ellis[s[1]]
-            drawString += "#Ellipse drawn with color: {0}\n".format(ellipse[1])
+            drawString += "#Ellipse drawn with color: {0} - {1}\n".format(ellipse[1], ellipse[0][1])
             drawString +=  "pygame.draw.ellipse(surface, {0}, pygame.Rect({1} - 50, {2}, {3}, {4}))\n\n".format(ellipse[0][1], ellipse[0][2][0],ellipse[0][2][1], ellipse[0][2][2], ellipse[0][2][3])
         if s[0] == "poly":
             polygon = polys[s[1]]
-            drawString += "#Rectangle drawn with color: {0}\n".format(polygon[1])
+            drawString += "#Rectangle drawn with color: {0}\n".format(polygon[1], polygon[0][1])
             mapped_points = []
             for point in range(len(polygon[0][2])):
                 mapped_points.append((polygon[0][2][point][0] - 50,polygon[0][2][point][1]))
