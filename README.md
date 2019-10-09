@@ -5,7 +5,7 @@ This program is a graphical user interface to complete the COMP 1405 first assig
 
 ## Usage
 
-after cloning the file to your computer, the gui can be booted with the command `python3 python_image_script.py`.
+after cloning the file to your computer, the gui can be booted with the command `python3 python_image_gui.py`.
 
 ### Drawing
 
